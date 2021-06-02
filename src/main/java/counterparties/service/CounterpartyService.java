@@ -1,14 +1,16 @@
 package counterparties.service;
 
 import counterparties.entity.Counterparty;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import counterparties.repository.CounterpartyRepository;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class CounterpartyService {
-    private CounterpartyRepository counterpartyRepository;
+    private final CounterpartyRepository counterpartyRepository;
 
     public List<Counterparty> findAll() {
         return counterpartyRepository.findAll();

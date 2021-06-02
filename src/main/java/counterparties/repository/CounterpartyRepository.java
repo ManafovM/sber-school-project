@@ -1,4 +1,4 @@
-package repository;
+package counterparties.repository;
 
 import counterparties.entity.Counterparty;
 import org.springframework.data.jpa.repository.JpaRepository;

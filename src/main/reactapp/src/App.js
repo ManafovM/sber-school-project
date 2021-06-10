@@ -1,4 +1,4 @@
-import '../css/App.css';
+import './css/App.css';
 import {Component} from "react";
 const client = require('./client');
 
@@ -19,7 +19,7 @@ class App extends Component{
         <div className="App">
           <header className="App-header">
             <div className="App-intro">
-              <h2>Counterparties</h2>
+              <h2>Контрагенты</h2>
               <CounterpartyList counterparties={this.state.counterparties}/>
             </div>
           </header>

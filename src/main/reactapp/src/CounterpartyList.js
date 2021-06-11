@@ -17,7 +17,7 @@ class CounterpartyList extends Component {
     }
 
     async remove(id) {
-        await fetch('counterparties/${id}', {
+        await fetch(`counterparties/${id}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -27,7 +27,7 @@ class CounterpartyList extends Component {
             let updatedCounterparties = [...this.state.counterparties]
                 .filter(item => item.id !== id);
             this.setState({counterparties: updatedCounterparties});
-        })
+        });
     }
 
     render() {
@@ -66,16 +66,16 @@ class CounterpartyList extends Component {
                     </div>
                     <h3>Контрагенты</h3>
                     <Table className={"mt-4"}>
-                        <thread>
-                            <tr>
-                                <th width="15%">Наименование</th>
-                                <th width="15%">ИНН</th>
-                                <th width="15%">КПП</th>
-                                <th width="15%">Номер счета</th>
-                                <th width="15%">БИК банка</th>
-                                <th width="15%">Действия</th>
-                            </tr>
-                        </thread>
+                        <thead>
+                        <tr>
+                            <th width="15%">Наименование</th>
+                            <th width="15%">ИНН</th>
+                            <th width="15%">КПП</th>
+                            <th width="15%">Номер счета</th>
+                            <th width="15%">БИК банка</th>
+                            <th width="15%">Действия</th>
+                        </tr>
+                        </thead>
                         <tbody>
                         {counterpartyList}
                         </tbody>

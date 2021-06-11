@@ -1,6 +1,6 @@
 import {Component} from "react";
 import {Button, Container, Form, FormGroup, Input, Label} from "reactstrap";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import AppNavbar from "./AppNavbar";
 
 class CounterpartyEdit extends Component {

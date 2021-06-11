@@ -1,37 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
-import {Component} from "react";
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Home from "./Home";
+import CounterpartyList from "./CounterpartyList";
+import CounterpartyEdit from "./CounterpartyEdit";
 
-class App extends Component {
-    state = {
-        counterparties: []
-    };
-
-    async componentDidMount() {
-        const response = await fetch('/counterparties');
-        const body = await response.json();
-        this.setState({counterparties: body._embedded.counterparties});
-    }
-
-    render() {
-        const {counterparties} = this.state;
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <div className="App-intro">
-                        <h2>Контрагенты</h2>
-                        {counterparties.map(counterparty =>
-                            <div key={counterparty.id}>
-                                {counterparty.name} {counterparty.tin} {counterparty.iec}
-                                {counterparty.accountNumber} {counterparty.bic}
-                            </div>
-                        )}
-                    </div>
-                </header>
-            </div>
-        );
-    }
+function App() {
+    return (
+        <Router>
+            <Switch>
+                <Route path='/' exact={true} component={Home}/>
+                <Route path='/counterparties' exact={true} component={CounterpartyList}/>
+                <Route path='/counterparties/:id' component={CounterpartyEdit}/>
+            </Switch>
+        </Router>
+    );
 }
 
 export default App;

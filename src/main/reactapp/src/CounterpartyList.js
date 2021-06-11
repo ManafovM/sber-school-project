@@ -13,7 +13,7 @@ class CounterpartyList extends Component {
     componentDidMount() {
         fetch('/counterparties')
             .then(response => response.json())
-            .then(data => this.setState({counterparties: data._embedded.counterparties}));
+            .then(data => this.setState({counterparties: data}));
     }
 
     async remove(id) {

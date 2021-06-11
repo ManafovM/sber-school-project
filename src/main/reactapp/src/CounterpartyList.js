@@ -1,6 +1,7 @@
 import {Component} from "react";
 import {Button, ButtonGroup, Container, Table} from "reactstrap";
 import {Link} from "react-router-dom";
+import AppNavbar from "./AppNavbar";
 
 class CounterpartyList extends Component {
     constructor(props) {

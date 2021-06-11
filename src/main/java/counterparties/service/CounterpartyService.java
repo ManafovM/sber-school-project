@@ -3,11 +3,8 @@ package counterparties.service;
 import counterparties.entity.Counterparty;
 import counterparties.repository.CounterpartyRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @AllArgsConstructor
@@ -23,13 +20,11 @@ public class CounterpartyService {
         return counterpartyRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public ResponseEntity<Counterparty> create(Counterparty counterparty) throws URISyntaxException {
-        Counterparty savedCounterparty = counterpartyRepository.save(counterparty);
-        return ResponseEntity.created(new URI("/counterparties/" +
-                savedCounterparty.getId())).body(savedCounterparty);
+    public Counterparty create(Counterparty counterparty) {
+        return counterpartyRepository.save(counterparty);
     }
 
-    public ResponseEntity<Counterparty> updateById(Long id, Counterparty counterparty) {
+    public Counterparty updateById(Long id, Counterparty counterparty) {
         Counterparty currentCounterparty = counterpartyRepository.findById(id).orElseThrow(RuntimeException::new);
         currentCounterparty.setName(counterparty.getName());
         currentCounterparty.setTin(counterparty.getTin());
@@ -37,11 +32,10 @@ public class CounterpartyService {
         currentCounterparty.setAccountNumber(counterparty.getAccountNumber());
         currentCounterparty.setBic(counterparty.getBic());
         currentCounterparty = counterpartyRepository.save(counterparty);
-        return ResponseEntity.ok(currentCounterparty);
+        return currentCounterparty;
     }
 
-    public ResponseEntity<Counterparty> deleteById(Long id) {
+    public void deleteById(Long id) {
         counterpartyRepository.deleteById(id);
-        return ResponseEntity.ok().build();
     }
 }

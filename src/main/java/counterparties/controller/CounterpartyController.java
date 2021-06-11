@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -25,17 +26,20 @@ public class CounterpartyController {
     }
 
     @PostMapping("/counterparties")
-    public ResponseEntity<Counterparty> create(@RequestBody Counterparty counterparty) throws URISyntaxException {
-        return counterpartyService.create(counterparty);
+    public ResponseEntity<?> create(@RequestBody Counterparty counterparty) throws URISyntaxException {
+        Counterparty createdCounterparty = counterpartyService.create(counterparty);
+        return ResponseEntity.created(new URI("/counterparties/" +
+                createdCounterparty.getId())).body(createdCounterparty);
     }
 
     @PutMapping("/counterparties/{id}")
-    public ResponseEntity<Counterparty> updateById(@PathVariable Long id, @RequestBody Counterparty counterparty) {
-        return counterpartyService.updateById(id, counterparty);
+    public ResponseEntity<?> updateById(@PathVariable Long id, @RequestBody Counterparty counterparty) {
+        return ResponseEntity.ok(counterpartyService.updateById(id, counterparty));
     }
 
     @DeleteMapping("/counterparties/{id}")
-    public ResponseEntity<Counterparty> deleteById(@PathVariable Long id) {
-        return counterpartyService.deleteById(id);
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        counterpartyService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -24,7 +24,7 @@ class CounterpartyEdit extends Component {
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
             const counterparty = await (
-                await fetch('/counterparties/${this.props.match.params.id}')).json();
+                await fetch(`/counterparties/${this.props.match.params.id}`)).json();
             this.setState({item: counterparty});
         }
     }

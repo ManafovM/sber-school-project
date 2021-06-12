@@ -1,5 +1,6 @@
 package counterparties.entity;
 
+import counterparties.service.constraint.TinConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Builder
@@ -25,18 +27,19 @@ public class Counterparty {
     private String name;
 
     @NotNull(message = "Введите ИНН контрагента.")
-    @Size(min = 10, max = 10, message = "ИНН должен быть длиной {min} символов.")
+    @Pattern(regexp="[0-9]{10}", message = "ИНН должен состоять из 10 цифр.")
+    @TinConstraint
     private String tin;
 
     @NotNull(message = "Введите КПП контрагента.")
-    @Size(min = 9, max = 9, message = "КПП должен быть длиной {min} символов.")
+    @Pattern(regexp="[0-9]{9}", message = "КПП должен состоять из 9 цифр.")
     private String iec;
 
     @NotNull(message = "Введите номер счета контрагента.")
-    @Size(min = 20, max = 20, message = "Номер счета должен быть длиной {min} символов.")
+    @Pattern(regexp="[0-9]{20}", message = "Номер счета должен состоять из 20 цифр.")
     private String accountNumber;
 
     @NotNull(message = "Введите БИК банка контрагента")
-    @Size(min = 9, max = 9, message = "БИК должен быть длиной {min} символов.")
+    @Pattern(regexp="[0-9]{9}", message = "БИК должен состоять из 9 цифр.")
     private String bic;
 }

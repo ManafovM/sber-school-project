@@ -5,7 +5,9 @@ import counterparties.repository.CounterpartyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -37,5 +39,11 @@ public class CounterpartyService {
 
     public void deleteById(Long id) {
         counterpartyRepository.deleteById(id);
+    }
+
+    public static List<Integer> stringToIntegers(String string) {
+        return Arrays.stream(string.split(""))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
     }
 }

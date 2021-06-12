@@ -31,11 +31,18 @@ public class CounterpartyService {
         currentCounterparty.setIec(counterparty.getIec());
         currentCounterparty.setAccountNumber(counterparty.getAccountNumber());
         currentCounterparty.setBic(counterparty.getBic());
-        currentCounterparty = counterpartyRepository.save(counterparty);
-        return currentCounterparty;
+        return counterpartyRepository.save(currentCounterparty);
     }
 
     public void deleteById(Long id) {
         counterpartyRepository.deleteById(id);
+    }
+
+    public Counterparty getByName(String name) {
+        return counterpartyRepository.findCounterpartyByName(name);
+    }
+
+    public Counterparty getByAccountNumberAndBic(String accountNumber, String bic) {
+        return counterpartyRepository.findCounterpartyByAccountNumberAndBic(accountNumber, bic);
     }
 }

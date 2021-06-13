@@ -42,4 +42,14 @@ public class CounterpartyController {
         counterpartyService.deleteById(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/counterparties/by-name")
+    public Counterparty getByName(@RequestParam String name) {
+        return counterpartyService.getByName(name);
+    }
+
+    @GetMapping("/counterparties/by-account-and-bic")
+    public Counterparty getByAccountNumberAndBic(@RequestParam(name = "account") String accountNumber, @RequestParam String bic) {
+        return counterpartyService.getByAccountNumberAndBic(accountNumber, bic);
+    }
 }

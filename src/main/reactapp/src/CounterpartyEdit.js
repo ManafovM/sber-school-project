@@ -60,7 +60,7 @@ class CounterpartyEdit extends Component {
         return (
             <div>
                 <AppNavbar/>
-                <Container>
+                <Container style={{marginTop: 20}}>
                     {title}
                     <Form onSubmit={this.handleSubmit}>
                         <FormGroup>
@@ -90,8 +90,10 @@ class CounterpartyEdit extends Component {
                                    onChange={this.handleChange} autoComplete="bic"/>
                         </FormGroup>
                         <FormGroup>
-                            <Button color="primary" type="submit">Сохранить</Button>{' '}
-                            <Button color="secondary" tag={Link} to="/counterparties">Отмена</Button>
+                            <Button style={{marginTop: 10}} color="primary"
+                                    type="submit">Сохранить</Button>{' '}
+                            <Button style={{marginTop: 10}} color="secondary"
+                                    tag={Link} to="/counterparties">Отмена</Button>
                         </FormGroup>
                     </Form>
                 </Container>

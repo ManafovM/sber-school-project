@@ -22,6 +22,17 @@ public class AccountNumberAndBicValidator implements ConstraintValidator<Account
         this.bicField = constraintAnnotation.bic();
     }
 
+    /**
+     * Проверяет корректность номера счета контрагента в паре с БИК банка. Из объекта для валидации
+     * берутся номер счета и БИК и преобразуются в целочисленные списки. Если 7 и 8 знаки БИКа нули,
+     * то перед номером счета добавляются "0" и разряды 5 и 6 БИКа банка. В противном случае добавляются
+     * три последние цифры БИКа. Вычисляется контрольная сумма с весовыми коэффициентами {@code ACCOUNT_VAL_WEIGHTS}.
+     * Вычисляется контрольное число как остаток от деления контрольной суммы на 10. Если контрольное число
+     * равно нулю, то номер счета и БИК считаются корректными.
+     *
+     * @param value объект для валидации
+     * @return true, если номер счета и БИК банка корректные, false - в противном случае
+     */
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         String accountNumberValue = (String) new BeanWrapperImpl(value)

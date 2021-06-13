@@ -47,7 +47,7 @@ class CounterpartyList extends Component {
                     <td>{counterparty.bic}</td>
                     <td>
                         <ButtonGroup>
-                            <Button size="sm" color="primary" tag={Link}
+                            <Button style={{marginRight: 5}} size="sm" color="primary" tag={Link}
                                     to={"/counterparties/" + counterparty.id}>Редактировать</Button>
                             <Button size="sm" color="danger" onClick={() =>
                                 this.remove(counterparty.id)}>Удалить</Button>
@@ -60,11 +60,11 @@ class CounterpartyList extends Component {
         return (
             <div>
                 <AppNavbar/>
-                <Container fluid>
+                <Container style={{marginTop: 20}}>
                     <div className="float-right">
                         <Button color="success" tag={Link} to="/counterparties/new">Добавить контрагента</Button>
                     </div>
-                    <h3>Контрагенты</h3>
+                    <h3 style={{marginTop: 20}}>Контрагенты</h3>
                     <Table className={"mt-4"}>
                         <thead>
                         <tr>

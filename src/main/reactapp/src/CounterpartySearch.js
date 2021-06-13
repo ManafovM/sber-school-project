@@ -98,16 +98,18 @@ export default class CounterpartySearch extends Component {
 
     render() {
         return (
-            <Container fluid>
+            <Container style={{marginTop: 20}}>
+                <h4>Поиск контрагента по наименованию</h4>
                 <Form onSubmit={this.searchByName}>
                     <FormGroup>
                         <Label for="name">Наименование</Label>
                         <Input type="text" name="searchName" id="name" onChange={this.handleChange}/>
                     </FormGroup>
                     <FormGroup>
-                        <Button color="primary" type="submit">Найти</Button>
+                        <Button style={{marginTop: 10}} color="primary" type="submit">Найти</Button>
                     </FormGroup>
                 </Form>
+                <h4 style={{marginTop: 20}}>Поиск контрагента по номеру счета и БИК банка</h4>
                 <Form onSubmit={this.searchByAccountAndBic}>
                     <FormGroup>
                         <Label for="account">Номер счета</Label>
@@ -120,7 +122,7 @@ export default class CounterpartySearch extends Component {
                         <Input type="text" name="searchBic" id="bic" onChange={this.handleChange}/>
                     </FormGroup>
                     <FormGroup>
-                        <Button color="primary" type="submit">Найти</Button>
+                        <Button style={{marginTop: 10}} color="primary" type="submit">Найти</Button>
                     </FormGroup>
                 </Form>
                 {this.renderSearchResponse()}

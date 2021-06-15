@@ -2,6 +2,7 @@ package counterparties.controller;
 
 import counterparties.entity.Counterparty;
 import counterparties.service.CounterpartyService;
+import counterparties.service.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,12 @@ public class CounterpartyController {
 
     @PostMapping("/counterparties")
     public ResponseEntity<?> create(@RequestBody Counterparty counterparty) throws URISyntaxException {
-        Counterparty createdCounterparty = counterpartyService.create(counterparty);
+        Counterparty createdCounterparty;
+        try {
+            createdCounterparty = counterpartyService.create(counterparty);
+        } catch (BusinessException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
         return ResponseEntity.created(new URI("/counterparties/" +
                 createdCounterparty.getId())).body(createdCounterparty);
     }

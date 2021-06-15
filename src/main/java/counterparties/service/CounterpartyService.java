@@ -2,9 +2,12 @@ package counterparties.service;
 
 import counterparties.entity.Counterparty;
 import counterparties.repository.CounterpartyRepository;
+import counterparties.service.exception.BusinessException;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,8 +23,15 @@ public class CounterpartyService {
         return counterpartyRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public Counterparty create(Counterparty counterparty) {
-        return counterpartyRepository.save(counterparty);
+    public Counterparty create(Counterparty counterparty) throws BusinessException {
+        try {
+            return counterpartyRepository.save(counterparty);
+        } catch (DataIntegrityViolationException ex) {
+            if (ex.getMostSpecificCause() instanceof SQLException) {
+                throw new BusinessException(ex.getMostSpecificCause().getMessage(), ex);
+            }
+        }
+        return new Counterparty();
     }
 
     public Counterparty updateById(Long id, Counterparty counterparty) {

@@ -81,7 +81,7 @@ export default class CounterpartySearch extends Component {
                         <td>{counterparty.bic}</td>
                         <td>
                             <ButtonGroup>
-                                <Button size="sm" color="primary" tag={Link}
+                                <Button style={{marginRight: 5}} size="sm" color="primary" tag={Link}
                                         to={"/counterparties/" + counterparty.id}>Редактировать</Button>
                                 <Button size="sm" color="danger" onClick={() =>
                                     this.remove(counterparty.id)}>Удалить</Button>

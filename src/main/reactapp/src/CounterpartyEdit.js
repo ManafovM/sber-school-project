@@ -33,7 +33,7 @@ class CounterpartyEdit extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        let item = {...this.state.item};
+        let {item} = this.state;
         item[name] = value;
         this.setState({item});
     }
@@ -49,8 +49,17 @@ class CounterpartyEdit extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(item),
-        });
-        this.props.history.push('/counterparties');
+        })
+            .then(response => {
+                if (response.ok) {
+                    this.props.history.push('/counterparties');
+                    throw Promise.reject("Success!");
+                }
+                return response;
+            })
+            .then(response => response.text())
+            .then(response => alert(response))
+            .catch(reject => console.log(reject));
     }
 
     render() {

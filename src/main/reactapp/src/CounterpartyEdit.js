@@ -33,12 +33,12 @@ class CounterpartyEdit extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        let item = {...this.state.item};
+        let {item} = this.state;
         item[name] = value;
         this.setState({item});
     }
 
-    async handleSubmit(event) {
+    async handleSubmit(data, event) {
         event.preventDefault();
         const {item} = this.state;
 
@@ -49,11 +49,25 @@ class CounterpartyEdit extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(item),
-        });
-        this.props.history.push('/counterparties');
+        })
+            .then(response => {
+                if (response.ok) {
+                    this.props.history.push('/counterparties');
+                    throw Promise.reject("Success!");
+                }
+                return response;
+            })
+            .then(response => response.text())
+            .then(response => alert(response))
+            .catch(reject => console.log(reject));
     }
 
     render() {
+        const {register, handleSubmit, formState: {errors}, formState, reset} = this.props;
+        if (formState.isSubmitSuccessful) {
+            reset();
+        }
+
         const {item} = this.state;
         const title = <h2>{item.id ? 'Редактирование контрагента' : 'Добавление контрагента'}</h2>;
 
@@ -62,32 +76,37 @@ class CounterpartyEdit extends Component {
                 <AppNavbar/>
                 <Container style={{marginTop: 20}}>
                     {title}
-                    <Form onSubmit={this.handleSubmit}>
+                    <Form onSubmit={handleSubmit(this.handleSubmit)}>
                         <FormGroup>
                             <Label for="name">Наименование</Label>
                             <Input type="text" name="name" id="name" value={item.name || ''}
-                                   onChange={this.handleChange} autoComplete="name"/>
+                                   {...register('name')} onChange={this.handleChange}/>
+                            <p style={{color: 'red'}}>{errors['name']?.message}</p>
                         </FormGroup>
                         <FormGroup>
                             <Label for="tin">ИНН</Label>
                             <Input type="text" name="tin" id="tin" value={item.tin || ''}
-                                   onChange={this.handleChange} autoComplete="tin"/>
+                                   {...register('tin')} onChange={this.handleChange}/>
+                            <p style={{color: 'red'}}>{errors['tin']?.message}</p>
                         </FormGroup>
                         <FormGroup>
                             <Label for="iec">КПП</Label>
                             <Input type="text" name="iec" id="iec" value={item.iec || ''}
-                                   onChange={this.handleChange} autoComplete="iec"/>
+                                   {...register('iec')} onChange={this.handleChange}/>
+                            <p style={{color: 'red'}}>{errors['iec']?.message}</p>
                         </FormGroup>
                         <FormGroup>
                             <Label for="accountNumber">Номер счета</Label>
                             <Input type="text" name="accountNumber" id="accountNumber"
-                                   value={item.accountNumber || ''} onChange={this.handleChange}
-                                   autoComplete="accountNumber"/>
+                                   value={item.accountNumber || ''} {...register('accountNumber')}
+                                   onChange={this.handleChange}/>
+                            <p style={{color: 'red'}}>{errors['accountNumber']?.message}</p>
                         </FormGroup>
                         <FormGroup>
                             <Label for="bic">БИК банка</Label>
                             <Input type="text" name="bic" id="bic" value={item.bic || ''}
-                                   onChange={this.handleChange} autoComplete="bic"/>
+                                   {...register('bic')} onChange={this.handleChange}/>
+                            <p style={{color: 'red'}}>{errors['bic']?.message}</p>
                         </FormGroup>
                         <FormGroup>
                             <Button style={{marginTop: 10}} color="primary"

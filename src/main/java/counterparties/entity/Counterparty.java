@@ -22,6 +22,9 @@ import javax.validation.constraints.Size;
         accountNumber = "accountNumber",
         bic = "bic"
 )
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"account_number", "bic"})
+})
 @GroupSequence({Inner.class, Counterparty.class})
 public class Counterparty {
     @Id
@@ -29,19 +32,21 @@ public class Counterparty {
     private Long id;
 
     @Column(unique = true)
-    @Size(min = 3, max = 20, message = "Наименование должно быть длиной от {min} до {max} символов.", groups = Inner.class)
+    @Size(min = 3,max = 20, groups = Inner.class)
     private String name;
 
-    @Pattern(regexp = "[0-9]{10}", message = "ИНН должен состоять из 10 цифр.", groups = Inner.class)
+    @Pattern(regexp = "[0-9]{10}", groups = Inner.class)
     @TinConstraint
     private String tin;
 
-    @Pattern(regexp = "[0-9]{9}", message = "КПП должен состоять из 9 цифр.", groups = Inner.class)
+    @Pattern(regexp = "[0-9]{9}", groups = Inner.class)
     private String iec;
 
-    @Pattern(regexp = "[0-9]{20}", message = "Номер счета должен состоять из 20 цифр.", groups = Inner.class)
+    @Column(name = "account_number")
+    @Pattern(regexp = "[0-9]{20}", groups = Inner.class)
     private String accountNumber;
 
-    @Pattern(regexp = "[0-9]{9}", message = "БИК должен состоять из 9 цифр.", groups = Inner.class)
+    @Column(name = "bic")
+    @Pattern(regexp = "[0-9]{9}", groups = Inner.class)
     private String bic;
 }

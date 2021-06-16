@@ -27,11 +27,8 @@ public class CounterpartyService {
         try {
             return counterpartyRepository.save(counterparty);
         } catch (DataIntegrityViolationException ex) {
-            if (ex.getMostSpecificCause() instanceof SQLException) {
-                throw new BusinessException(ex.getMostSpecificCause().getMessage(), ex);
-            }
+            throw new BusinessException(ex.getMostSpecificCause().getMessage(), ex);
         }
-        return new Counterparty();
     }
 
     public Counterparty updateById(Long id, Counterparty counterparty) {

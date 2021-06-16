@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
         accountNumber = "accountNumber",
         bic = "bic"
 )
-@Table(uniqueConstraints={
+@Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"account_number", "bic"})
 })
 @GroupSequence({Inner.class, Counterparty.class})
@@ -32,7 +32,7 @@ public class Counterparty {
     private Long id;
 
     @Column(unique = true)
-    @Size(min = 3,max = 20, groups = Inner.class)
+    @Size(min = 3, max = 20, groups = Inner.class)
     private String name;
 
     @Pattern(regexp = "[0-9]{10}", groups = Inner.class)

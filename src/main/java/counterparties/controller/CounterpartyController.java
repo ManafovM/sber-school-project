@@ -40,7 +40,13 @@ public class CounterpartyController {
 
     @PutMapping("/counterparties/{id}")
     public ResponseEntity<?> updateById(@PathVariable Long id, @RequestBody Counterparty counterparty) {
-        return ResponseEntity.ok(counterpartyService.updateById(id, counterparty));
+        Counterparty updatedCounterparty;
+        try {
+            updatedCounterparty = counterpartyService.updateById(id, counterparty);
+        } catch (BusinessException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+        return ResponseEntity.ok(updatedCounterparty);
     }
 
     @DeleteMapping("/counterparties/{id}")

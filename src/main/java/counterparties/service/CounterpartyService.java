@@ -6,6 +6,7 @@ import counterparties.service.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 
 import java.util.List;
 
@@ -30,14 +31,18 @@ public class CounterpartyService {
         }
     }
 
-    public Counterparty updateById(Long id, Counterparty counterparty) {
+    public Counterparty updateById(Long id, Counterparty counterparty) throws BusinessException {
         Counterparty currentCounterparty = counterpartyRepository.findById(id).orElseThrow(RuntimeException::new);
         currentCounterparty.setName(counterparty.getName());
         currentCounterparty.setTin(counterparty.getTin());
         currentCounterparty.setIec(counterparty.getIec());
         currentCounterparty.setAccountNumber(counterparty.getAccountNumber());
         currentCounterparty.setBic(counterparty.getBic());
-        return counterpartyRepository.save(currentCounterparty);
+        try {
+            return counterpartyRepository.save(counterparty);
+        } catch (TransactionSystemException ex) {
+            throw new BusinessException(ex.getMostSpecificCause().getMessage(), ex);
+        }
     }
 
     public void deleteById(Long id) {
